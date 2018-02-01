@@ -2,7 +2,7 @@
   <small>data</small>
 </h4>
 <hr>
-<form [formGroup]="forma" (ngSubmit)="guardarCambios()" novalidate="novalidate">
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
 
   <div>
 
@@ -10,7 +10,7 @@
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
 
-        <input class="form-control" type="text" placeholder="Nombre">
+        <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre">
       </div>
     </div>
 
@@ -18,7 +18,7 @@
       <label class="col-2 col-form-label">Apellido</label>
       <div class="col-8">
 
-        <input class="form-control" type="text" placeholder="Apellido">
+        <input class="form-control" type="text" placeholder="Apellido" formControlName="apellido">
       </div>
     </div>
 
@@ -28,7 +28,7 @@
     <label class="col-2 col-form-label">Correo</label>
     <div class="col-md-8">
 
-      <input class="form-control" type="email" placeholder="Correo electrónico">
+      <input class="form-control" type="email" placeholder="Correo electrónico" formControlName="correo">
     </div>
   </div>
 
@@ -42,5 +42,9 @@
       </button>
     </div>
   </div>
+
+  <pre>
+    {{forma.valid}}
+  </pre>
 
 </form>
