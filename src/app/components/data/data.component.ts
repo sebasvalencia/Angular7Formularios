@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators. FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 
 
@@ -34,9 +34,9 @@ export class DataComponent implements OnInit {
         //'nombre':new FormControl('Sebas'),
         //this.usuario.nombrecompleto.nombre -> precargar informacion
         'nombre': new FormControl(this.usuario.nombrecompleto.nombre, [Validators.required, Validators.minLength(3)]),
-        'apellido': new FormControl(this.usuario.nombrecompleto.apellido, Validators.required)
+        'apellido': new FormControl(this.usuario.nombrecompleto.apellido, [Validators.required, this.noHerrera])
       }),
-      'pasatiempos':new FormArray([
+      'pasatiempos': new FormArray([
         new FormControl('Correr', Validators.required)
       ]),
       'correo': new FormControl(this.usuario.correo, [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")
@@ -49,23 +49,35 @@ export class DataComponent implements OnInit {
 
   }
 
-  agregarPasatiempo(){
+  agregarPasatiempo() {
     (<FormArray>this.forma.controls['pasatiempos']).push(
       new FormControl('', Validators.required)
     )
   }
 
+  //validacion - q cualquier persona tenga el apellido herrera
+  noHerrera(control: FormControl): { [s: string]: boolean } {
+    if(control.value === "herrera"){
+      return {
+        noherrera:true
+      }
+    }
+    return null;
+  }
+
+
   guardarCambios() {
     console.log(this.forma.value);
     console.log(this.forma);
     //this.forma.reset( this.usuario );
-    this.forma.reset({
+    
+    /*this.forma.reset({
       nombrecompleto: {
         nombre: '',
         apellido: ''
       },
       correo: ''
-    });
+    });*/
 
     //Otra forma, no es la mejor
     //this.forma.controls['correo'].setValue('nuevocorreo@setvalue.com');
