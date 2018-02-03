@@ -41,10 +41,17 @@ export class DataComponent implements OnInit {
       ]),
       'correo': new FormControl(this.usuario.correo, [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")
 
-      ])
+      ]),
+      'password1': new FormControl('', Validators.required),
+      'password2': new FormControl()
     });
 
     //this.forma.setValue(this.usuario);
+
+    this.forma.controls['password2'].setValidators([
+      Validators.required,
+      this.noIgual.bind(this.forma) //la funcion esta en otro contexto
+    ]);
 
 
   }
@@ -57,20 +64,32 @@ export class DataComponent implements OnInit {
 
   //validacion - q cualquier persona tenga el apellido herrera
   noHerrera(control: FormControl): { [s: string]: boolean } {
-    if(control.value === "herrera"){
+    if (control.value === "herrera") {
       return {
-        noherrera:true
+        noherrera: true
+      }
+    }
+    return null;
+  }
+
+  noIgual(control: FormControl): { [s: string]: boolean } {
+    console.log(this);
+    let forma: any = this;
+    if (control.value !== forma.controls['password1'].value) {
+      return {
+        noiguales: true
       }
     }
     return null;
   }
 
 
+
   guardarCambios() {
     console.log(this.forma.value);
     console.log(this.forma);
     //this.forma.reset( this.usuario );
-    
+
     /*this.forma.reset({
       nombrecompleto: {
         nombre: '',
