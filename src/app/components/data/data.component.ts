@@ -56,6 +56,22 @@ export class DataComponent implements OnInit {
     ]);
 
 
+    //crear observador para revisar los cambios en la data
+    /*this.forma.valueChanges.subscribe( data=>{
+      console.log(data);
+    } );*/
+
+    //solo esta pendiente del username
+    this.forma.controls['username'].valueChanges.subscribe( data =>{
+      console.log(data);
+    });
+
+    //subscribirnos al status del control
+    this.forma.controls['username'].statusChanges.subscribe( data =>{
+      console.log(data);
+    });
+
+
   }
 
   agregarPasatiempo() {
